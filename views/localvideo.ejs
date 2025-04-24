@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Video Call</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body class="bg-black text-white">
+    <!-- Fullscreen remote video -->
+    <div
+    id="remoteVideo"
+    class="relative w-full h-screen bg-gray-900 flex flex-col justify-end items-center"
+  >
+    <video
+      id="remote-Video"
+      autoplay
+      muted
+      class="w-full h-full rounded-md"
+    ></video>
+    <!-- Action buttons with icons -->
+    <div class="absolute bottom-8 flex gap-8">
+      <!-- Mute Button -->
+      <button
+        id="muteBtn"
+        class="bg-red-600 text-white p-3 rounded-full hover:bg-red-700 flex items-center justify-center"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15 12H9m0 0l3-3m-3 3l3 3"
+          />
+        </svg>
+      </button>
+
+      <!-- Cut Call Button -->
+      <button
+        id="endCallBtn"
+        class="bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 flex items-center justify-center"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4" />
+        </svg>
+      </button>
+
+      <!-- Present Screen Button -->
+      <button
+        id="shareScreenBtn"
+        class="bg-green-600 text-white p-3 rounded-full hover:bg-green-700 flex items-center justify-center"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M4 4h16v16H4z"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Movable local video -->
+  <div
+    id="localVideo"
+    class="absolute bottom-4 right-4 bg-gray-800 w-64 h-48 rounded-md shadow-md cursor-move"
+  >
+    <video
+      id="local-Video"
+      autoplay
+      muted
+      class="w-full h-full rounded-md"
+    ></video>
+  </div>
+    <script src="https://cdn.socket.io/4.8.1/socket.io.min.js" integrity="sha384-mkQ3/7FUtcGyoppY6bz/PORYoGqOl7/aSUMn2ymDOJcapfS6PHqxhRTMh1RR0Q6+" crossorigin="anonymous"></script>
+    <script>
+        // Enable drag functionality for localVideo with boundary restrictions
+        function makeMovable(videoElementId) {
+          const videoElement = document.getElementById(videoElementId);
+        
+          let isDragging = false;
+          let offsetX, offsetY;
+        
+          videoElement.addEventListener("mousedown", (e) => {
+            isDragging = true;
+            offsetX = e.clientX - videoElement.offsetLeft;
+            offsetY = e.clientY - videoElement.offsetTop;
+            videoElement.style.cursor = "move";
+          });
+        
+          document.addEventListener("mousemove", (e) => {
+            if (isDragging) {
+              const container = document.getElementById("remoteVideo");
+        
+              const containerRect = container.getBoundingClientRect();
+              const videoRect = videoElement.getBoundingClientRect();
+        
+              let newX = e.clientX - offsetX;
+              let newY = e.clientY - offsetY;
+        
+              // Restrict movement within container
+              if (newX < containerRect.left) newX = containerRect.left;
+              if (newY < containerRect.top) newY = containerRect.top;
+              if (newX + videoRect.width > containerRect.right)
+                newX = containerRect.right - videoRect.width;
+              if (newY + videoRect.height > containerRect.bottom)
+                newY = containerRect.bottom - videoRect.height;
+        
+              videoElement.style.left = `${newX - containerRect.left}px`;
+              videoElement.style.top = `${newY - containerRect.top}px`;
+            }
+          });
+        
+          document.addEventListener("mouseup", () => {
+            isDragging = false;
+            videoElement.style.cursor = "default";
+          });
+        }
+        
+        // Initialize draggable local video
+        window.onload = () => {
+          makeMovable("localVideo");
+        };
+  
+        //Webrtc starts from here
+        const socket = io();
+
+let localStream;
+let remoteStream;
+let peerConnection;
+let inCall = true;
+
+// ICE server configuration
+const servers = {
+  iceServers: [
+    { urls: "stun:stun.l.google.com:19302" },
+    {
+      urls: "turn:TURN_SERVER_URL",
+      username: "TURN_SERVER_USERNAME",
+      credential: "TURN_SERVER_CREDENTIAL",
+    },
+  ],
+};
+
+
+// WebRTC Initialization
+async function startLocalStream() {
+  try {
+    localStream = await navigator.mediaDevices.getUserMedia({
+      video: true,
+      audio: true,
+    });
+    document.getElementById("local-Video").srcObject = localStream;
+     
+    initiateOffer();
+
+    inCall = true;
+  } catch (error) {
+    console.error("Error accessing media devices:", error);
+  }
+}
+
+// Initiating offer
+const initiateOffer = async function(){
+   await createPeerConnection();
+   try{
+    let offer = await peerConnection.createOffer();
+    await peerConnection.startLocalDescription(offer);
+    socket.emit("signalingMessage",{
+      room,
+      message:{
+        type: "offer",
+        offer
+      }
+    })
+   }
+   catch(err){
+    console.log("Failed"+err)
+   }
+}
+
+// Create a peer connection
+function createPeerConnection() {
+  peerConnection = new RTCPeerConnection(servers);
+
+  localStream.getTracks().forEach((track) => {
+    peerConnection.addTrack(track, localStream);
+  }); 
+
+  peerConnection.ontrack = (event) => {
+    if (!remoteStream) {
+      remoteStream = new MediaStream();
+      document.getElementById("remote-Video").srcObject = remoteStream;
+    }
+    event.streams[0].getTracks().forEach((track) => {
+      remoteStream.addTrack(track);
+    });
+  };
+
+  peerConnection.onicecandidate = (event) => {
+    if (event.candidate) {
+      socket.emit("candidate", {
+        room,
+        message:JSON.stringify({
+            type: "candidate",
+            candidate: event.candidate
+        })
+      });
+    }
+  };
+}
+
+
+
+      </script>
+  </body>
+</html>
