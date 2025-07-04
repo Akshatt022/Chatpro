@@ -3,23 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Start Your Call</title>
-    <!-- Tailwind CSS CDN -->
+    <title>VideoConnect - Anonymous Video Chat</title>
     <link rel="stylesheet" href="css/style.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>📹</text></svg>">
 </head>
-<body class="w-screen h-screen flex items-center justify-center bg-gradient-to-r from-blue-50 to-blue-100">
-    <div id="centre-box" class="w-[40%] max-w-[400px] h-[40%] bg-white rounded-xl shadow-2xl flex flex-col items-center justify-center gap-8 px-6 py-8">
-        <!-- Heading -->
-        <h1 class="text-[28px] font-playfair font-bold text-gray-800 text-center">
-            Start Your Call
-        </h1>
-        <!-- Button -->
-        <a href="/call" 
-            class="bg-cyan-600 text-white px-8 py-3 rounded-full text-[20px] font-inter font-semibold shadow-md hover:bg-cyan-700 hover:shadow-lg transition-all duration-300">
-            Start Call
-        </a>
+<body class="w-screen h-screen overflow-hidden gradient-bg">
+    <!-- Animated background elements -->
+    <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute w-96 h-96 bg-primary/20 rounded-full blur-3xl -top-48 -left-48 animate-float"></div>
+        <div class="absolute w-96 h-96 bg-secondary/20 rounded-full blur-3xl -bottom-48 -right-48 animate-float-delay"></div>
+        <div class="absolute w-64 h-64 bg-accent/20 rounded-full blur-3xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse-slow"></div>
+    </div>
+
+    <!-- Main content -->
+    <div class="relative z-10 w-full h-full flex items-center justify-center p-4">
+        <div class="glass-morphism rounded-3xl p-8 md:p-12 max-w-md w-full animate-fade-in">
+            <!-- Logo/Icon -->
+            <div class="flex justify-center mb-8">
+                <div class="w-20 h-20 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center shadow-lg neon-glow animate-float">
+                    <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Heading -->
+            <h1 class="text-4xl md:text-5xl font-display font-bold text-center mb-4">
+                <span class="text-gradient">VideoConnect</span>
+            </h1>
+            <p class="text-white/80 text-center mb-8 text-lg">
+                Connect with people around the world through anonymous video chat
+            </p>
+
+            <!-- Features -->
+            <div class="space-y-3 mb-8">
+                <div class="flex items-center space-x-3 text-white/70">
+                    <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span>No registration required</span>
+                </div>
+                <div class="flex items-center space-x-3 text-white/70">
+                    <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span>Instant video & text chat</span>
+                </div>
+                <div class="flex items-center space-x-3 text-white/70">
+                    <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span>100% Anonymous & Free</span>
+                </div>
+            </div>
+
+            <!-- Start Button -->
+            <a href="/call" class="btn-primary w-full text-center text-lg flex items-center justify-center space-x-2 group">
+                <span>Start Chatting</span>
+                <svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                </svg>
+            </a>
+
+            <!-- Footer -->
+            <p class="text-white/50 text-center mt-6 text-sm">
+                By clicking start, you agree to chat respectfully
+            </p>
+        </div>
     </div>
 </body>
 </html>

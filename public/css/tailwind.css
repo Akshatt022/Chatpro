@@ -1,3 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    @apply antialiased;
+  }
+}
+
+@layer components {
+  .gradient-bg {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+  }
+
+  .glass-morphism {
+    @apply backdrop-blur-md bg-glass border border-white/20 shadow-2xl;
+  }
+
+  .glass-morphism-dark {
+    @apply backdrop-blur-md bg-glass-dark border border-white/10 shadow-2xl;
+  }
+
+  .btn-primary {
+    @apply bg-gradient-to-r from-primary to-accent text-white font-semibold py-3 px-8 rounded-full 
+    shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200
+    active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply bg-white/10 backdrop-blur-sm text-white font-semibold py-3 px-8 rounded-full 
+    border border-white/20 shadow-lg hover:shadow-xl hover:bg-white/20 
+    transform hover:-translate-y-0.5 transition-all duration-200;
+  }
+
+  .chat-bubble-sent {
+    @apply bg-gradient-to-r from-primary to-accent text-white rounded-2xl rounded-br-sm
+    px-4 py-2 max-w-[70%] ml-auto shadow-lg animate-slide-up;
+  }
+
+  .chat-bubble-received {
+    @apply bg-white/90 backdrop-blur-sm text-gray-800 rounded-2xl rounded-bl-sm
+    px-4 py-2 max-w-[70%] mr-auto shadow-lg animate-slide-up border border-gray-200;
+  }
+
+  .floating-video {
+    @apply absolute bg-black rounded-2xl overflow-hidden shadow-2xl
+    border-2 border-white/20 transition-all duration-300 hover:border-white/40;
+  }
+
+  .control-btn {
+    @apply w-14 h-14 rounded-full flex items-center justify-center
+    transition-all duration-200 transform hover:scale-110 active:scale-95
+    shadow-lg backdrop-blur-sm;
+  }
+
+  .neon-glow {
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.5),
+                0 0 40px rgba(99, 102, 241, 0.3),
+                0 0 60px rgba(99, 102, 241, 0.1);
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent;
+  }
+
+  .animate-float-delay {
+    animation: float 6s ease-in-out 3s infinite;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
