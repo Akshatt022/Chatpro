@@ -1,0 +1,361 @@
+/* Responsive CSS for ChatPro Video Chat */
+/* Mobile First Approach - Base styles are for mobile, media queries for larger screens */
+
+/* ========== Typography & Sizing Variables ========== */
+:root {
+  /* Mobile sizes */
+  --nav-padding-x: 1rem;
+  --nav-padding-y: 0.75rem;
+  --logo-size: 2.25rem;
+  --title-size: 1.25rem;
+  --button-padding-x: 0.75rem;
+  --button-padding-y: 0.5rem;
+  --text-small: 0.875rem;
+  --text-base: 1rem;
+  --chat-padding: 1rem;
+  --local-video-width: 9rem;
+  --local-video-height: 7rem;
+  --control-btn-size: 1rem;
+  --control-btn-padding: 1rem;
+  --input-padding-x: 1.25rem;
+  --input-padding-y: 0.625rem;
+}
+
+/* ========== Tablet Styles (640px and up) ========== */
+@media (min-width: 640px) {
+  :root {
+    --nav-padding-x: 1.5rem;
+    --nav-padding-y: 1rem;
+    --logo-size: 2.5rem;
+    --title-size: 1.5rem;
+    --button-padding-x: 1rem;
+    --button-padding-y: 0.5rem;
+    --text-small: 0.875rem;
+    --text-base: 1rem;
+    --chat-padding: 1.5rem;
+    --local-video-width: 12rem;
+    --local-video-height: 9rem;
+    --control-btn-padding: 1rem;
+  }
+
+  /* Navigation adjustments */
+  .nav-container {
+    padding: var(--nav-padding-y) var(--nav-padding-x);
+  }
+
+  .logo-container {
+    width: var(--logo-size);
+    height: var(--logo-size);
+  }
+
+  .logo-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .nav-title {
+    font-size: var(--title-size);
+  }
+
+  /* Show hidden elements on larger screens */
+  .desktop-only {
+    display: inline !important;
+  }
+
+  .mobile-only {
+    display: none !important;
+  }
+
+  /* Chat section */
+  .chat-section {
+    padding-top: 5rem;
+    padding-bottom: 6rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .chat-container {
+    border-radius: 1rem;
+    padding: var(--chat-padding);
+  }
+
+  /* Message styling */
+  .message-container {
+    margin-bottom: 1rem;
+  }
+
+  .message-text {
+    font-size: var(--text-base);
+  }
+
+  /* Video section adjustments */
+  .local-video-container {
+    width: var(--local-video-width);
+    height: var(--local-video-height);
+  }
+
+  .local-video {
+    border-radius: 1rem;
+  }
+
+  /* Control buttons */
+  .video-controls {
+    bottom: 2rem;
+    gap: 1rem;
+  }
+
+  .control-btn {
+    padding: var(--control-btn-padding);
+  }
+
+  .control-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  /* Call timer */
+  .call-timer-container {
+    top: 6rem;
+    padding: 0.5rem 1.5rem;
+  }
+
+  .call-timer-text {
+    font-size: var(--text-base);
+  }
+
+  /* Input section */
+  .input-section {
+    padding: 1rem;
+  }
+
+  .message-input {
+    padding: 0.75rem 1.5rem;
+    font-size: var(--text-base);
+  }
+
+  .send-button {
+    padding: 0.75rem;
+  }
+
+  .send-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  /* Modals */
+  .modal-container {
+    padding: 2rem;
+    border-radius: 1rem;
+    max-width: 24rem;
+  }
+
+  .modal-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .modal-text {
+    font-size: var(--text-base);
+  }
+
+  /* Notification positioning */
+  .notification-container {
+    top: 6rem;
+    padding: 0.75rem 1.5rem;
+    max-width: 24rem;
+  }
+}
+
+/* ========== Desktop Styles (1024px and up) ========== */
+@media (min-width: 1024px) {
+  :root {
+    --nav-padding-x: 2rem;
+    --chat-padding: 2rem;
+  }
+
+  /* Larger spacing for desktop */
+  .chat-section {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .video-controls {
+    gap: 1.5rem;
+  }
+}
+
+/* ========== Wide Desktop Styles (1280px and up) ========== */
+@media (min-width: 1280px) {
+  /* Max width containers */
+  .max-container {
+    max-width: 80rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* ========== Base Mobile Styles ========== */
+/* Navigation */
+.nav-container {
+  padding: var(--nav-padding-y) var(--nav-padding-x);
+}
+
+.logo-container {
+  width: var(--logo-size);
+  height: var(--logo-size);
+}
+
+.logo-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.nav-title {
+  font-size: var(--title-size);
+}
+
+/* Chat section */
+.chat-section {
+  padding-top: 5rem;
+  padding-bottom: 6rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.chat-container {
+  border-radius: 0.75rem;
+  padding: var(--chat-padding);
+}
+
+/* Messages */
+.message-container {
+  margin-bottom: 0.75rem;
+}
+
+.message-text {
+  font-size: var(--text-base);
+}
+
+/* Video section */
+.local-video-container {
+  width: var(--local-video-width);
+  height: var(--local-video-height);
+}
+
+.local-video {
+  border-radius: 0.75rem;
+}
+
+/* Control buttons */
+.video-controls {
+  bottom: 1.5rem;
+  gap: 0.75rem;
+}
+
+.control-btn {
+  padding: var(--control-btn-padding);
+}
+
+.control-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* Call timer */
+.call-timer-container {
+  top: 5rem;
+  padding: 0.25rem 1rem;
+}
+
+.call-timer-text {
+  font-size: var(--text-small);
+}
+
+/* Input section */
+.input-section {
+  padding: 0.75rem;
+}
+
+.message-input {
+  padding: 0.625rem 1.25rem;
+  font-size: var(--text-base);
+}
+
+.send-button {
+  padding: 0.625rem;
+}
+
+.send-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* Modals */
+.modal-container {
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  max-width: 20rem;
+}
+
+.modal-title {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.modal-text {
+  font-size: var(--text-base);
+}
+
+/* Notifications */
+.notification-container {
+  top: 5rem;
+  padding: 0.5rem 1rem;
+  max-width: 20rem;
+}
+
+/* ========== Utility Classes ========== */
+/* Hide elements on mobile by default */
+.desktop-only {
+  display: none;
+}
+
+/* Responsive spacing utilities */
+.space-x-responsive {
+  gap: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .space-x-responsive {
+    gap: 1rem;
+  }
+}
+
+/* Responsive text utilities */
+.text-responsive-sm {
+  font-size: var(--text-small);
+}
+
+.text-responsive-base {
+  font-size: var(--text-base);
+}
+
+/* Button responsiveness */
+.btn-responsive {
+  padding: var(--button-padding-y) var(--button-padding-x);
+  font-size: var(--text-small);
+}
+
+@media (min-width: 640px) {
+  .btn-responsive {
+    font-size: var(--text-base);
+  }
+}
+
+/* ========== Animation Adjustments ========== */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
